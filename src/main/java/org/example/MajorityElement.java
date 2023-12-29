@@ -11,29 +11,29 @@ public class MajorityElement {
     }
 
     public static int getMajorityElement(int [] nums) {
-        int currentMax = 0;
-        int globalMax = -1;
-        int majorityIndex = 0;
-        Set<Integer> brain = new HashSet<>((nums.length/2)+1);
+        // Variable to track the frequency of majority element
+        int currentMaxFrequency, globalMaxFrequency = -1;
+        int majorityElementIndex = 0;
+        Set<Integer> brain = new HashSet<>();
         for( int i = 0; i < nums.length; i++) {
-            if (globalMax >= (nums.length/2)+1)
-                return nums[majorityIndex];
-            currentMax =0;
+            // if globalMaxFrequency exceeds half the length of array, it implies we have
+            // already found the index of majority element.
+            if (globalMaxFrequency >= (nums.length/2)+1)
+                return nums[majorityElementIndex];
+            currentMaxFrequency = 0;
             int keyToCompare = nums[i];
             for (int j = 0; j < nums.length; j++) {
-                if (brain.contains(nums[i])) {
-                    System.out.println("hello");
+                if (brain.contains(nums[i]))
                     break;
-                }
                 if (keyToCompare == nums[j])
-                    currentMax++;
+                    currentMaxFrequency++;
             }
-            if (currentMax > globalMax) {
-                globalMax = currentMax;
-                majorityIndex = i;
+            if (currentMaxFrequency > globalMaxFrequency) {
+                globalMaxFrequency = currentMaxFrequency;
+                majorityElementIndex = i;
             }
             brain.add(nums[i]);
         }
-        return nums[majorityIndex];
+        return nums[majorityElementIndex];
     }
 }
