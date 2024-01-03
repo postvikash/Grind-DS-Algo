@@ -25,17 +25,20 @@ public class StockBuyAndSell {
     }
 
     public static int maxProfit(int[] prices) {
+        int global_maxima = Integer.MIN_VALUE;
+        int global_minima = Integer.MAX_VALUE;
         int max_profit = 0;
-        long timeAtStart = System.currentTimeMillis();
         for (int i = 0; i < prices.length - 1; i++) {
-            for (int j = i+1; j < prices.length; j++) {
-                if (prices[j] - prices[i] > max_profit)
-                    max_profit = prices[j] - prices[i];
+            if (prices[i] > global_maxima) {
+                global_maxima = prices[i];
             }
+            if (prices[i] < global_minima) {
+                global_minima = prices[i];
+                global_maxima = Integer.MIN_VALUE;
+            }
+            if ( global_maxima - global_minima > max_profit )
+                max_profit = global_maxima - global_minima;
         }
-        long timeAtEnd= System.currentTimeMillis();
-        System.out.println("Execution time : " + (timeAtEnd - timeAtStart) + " ms");
-        System.out.println("Number of elements in array " + prices.length);
         return max_profit;
     }
 
