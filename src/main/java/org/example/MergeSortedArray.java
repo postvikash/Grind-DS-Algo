@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
     You are given two integer arrays nums1 and nums2, sorted in non-decreasing order,
     and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
@@ -45,7 +48,40 @@ package org.example;
  */
 public class MergeSortedArray {
     public static void main(String [] args) {
-        System.out.println( "Hello World!" );
+        int [] nums1 = {1,2,3,0,0,0}, nums2 = {2,5,6} ;
+        int m = 3, n = 3;
+        merge(nums1, m, nums2, n);
+    }
+
+    public static void merge(int[] nums1, int m, int[] nums2, int n) {
+        if (n == 0)
+            return;
+        if (m == 0) {
+            for (int i = 0; i < nums2.length; i++)
+                nums1[i] = nums2[i];
+        }
+        List<Integer> sortedList = new ArrayList<>(m+n);
+        int i = 0, j = 0;
+        while (i < nums1.length - n && j < nums2.length) {
+            if (nums1[i] <= nums2[j]) {
+                sortedList.add(nums1[i]);
+                i++;
+            } else {
+                sortedList.add(nums2[j]);
+                j++;
+            }
+        }
+        while ( i == nums1.length - n && j < nums2.length) {
+            sortedList.add(nums2[j]);
+            j++;
+        }
+        while ( j == nums2.length && i < nums1.length - n) {
+            sortedList.add(nums1[i]);
+            i++;
+        }
+        sortedList.forEach(e -> System.out.print(e + ", "));
+        for (int k = 0; k < sortedList.size(); k++)
+            nums1[k] = sortedList.get(k);
     }
 }
 
