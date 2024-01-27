@@ -4,7 +4,11 @@ public class SortedArrayToBST {
 
     public static void main(String[] args) {
         int[] nums = {1,2,3,5,9,32};
-        preOrder(sortedArrayToBST(nums));
+        TreeNode root = sortedArrayToBST(nums);
+        nums[0] = -1;
+        TreeNode rootCorrupt = sortedArrayToBST(nums);
+        preOrder(root);
+        System.out.println(SameTree.isSameTree(root, rootCorrupt));
     }
     public static TreeNode sortedArrayToBST(int[] nums) {
         return transformArrayToBST(nums, 0, nums.length -1);
