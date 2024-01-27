@@ -9,6 +9,8 @@ public class SortedArrayToBST {
         TreeNode rootCorrupt = sortedArrayToBST(nums);
         preOrder(root);
         System.out.println(SameTree.isSameTree(root, rootCorrupt));
+        InvertTree.invertTree(root);
+        preOrder(root);
     }
     public static TreeNode sortedArrayToBST(int[] nums) {
         return transformArrayToBST(nums, 0, nums.length -1);
@@ -33,9 +35,3 @@ public class SortedArrayToBST {
     }
 }
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode(int val) { this.val = val; }
-}
