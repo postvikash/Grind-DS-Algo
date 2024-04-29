@@ -2,59 +2,28 @@ package org.example;
 import java.util.Stack;
 
 public class NumOfIsland {
-    public int numIslands(char[][] grid) {
-        int[][] gridCopy = new int[grid.length][grid[0].length];
-        for(int i = 0; i < grid.length; i++)
-            for(int j = 0; j < grid[i].length; j++)
-                gridCopy[i][j] = (grid[i][j] == '0') ? 0 : 1;
-        for(int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++)
-                System.out.print(gridCopy[i][j] + " ");
-            System.out.print("\n");
-        }
-        int count = 0;
-        Stack<Location> locationStack = new Stack<>();
-        int[][] visited = new int[grid.length][grid[0].length];
-        for(int i = 0; i < grid.length; i++) {
-            for(int j = 0; j < grid[i].length; j++) {
-                if (gridCopy[i][j] == 1 && visited[i][j] == 0) {
-                    count++;
-                    visited[i][j] = count;
-                    locationStack.push(new Location(i, j));
+    public static int numIslands(char[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int numOfIslands = 0;
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) {
+                if(grid[i][j] == '1') {
+                    numOfIslands++;
+                    dfs(i, j, grid, rows, cols);
                 }
-                if(!locationStack.empty())
-                    bfs(gridCopy, visited, locationStack, count);
             }
         }
-        for(int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++)
-                System.out.print(visited[i][j] + " ");
-            System.out.print("\n");
-        }
-        return count;
+        return numOfIslands;
     }
 
-    public void bfs(int[][] gridCopy, int[][] visited, Stack<Location> locationStack, int count) {
-        while(!locationStack.empty()) {
-            Location coordiates = locationStack.pop();
-            int i = coordiates.getX();
-            int j = coordiates.getY();
-            if (i+1 < gridCopy.length && gridCopy[i+1][j] == 1 && visited[i+1][j] == 0) {
-                locationStack.push(new Location(i+1, j));
-                visited[i+1][j] = count;
-            }
-            if (i-1 >= 0 && gridCopy[i-1][j] == 1 && visited[i-1][j] == 0) {
-                locationStack.push(new Location(i-1, j));
-                visited[i+1][j] = count;
-            }
-            if (j+1 < gridCopy[0].length && gridCopy[i][j+1] == 1 && visited[i][j+1] == 0) {
-                locationStack.push(new Location(i, j+1));
-                visited[i][j+1] = count;
-            }
-            if (j-1 >= 0 && gridCopy[i][j-1] == 1 && visited[i][j-1] == 0) {
-                locationStack.push(new Location(i, j-1));
-                visited[i][j-1] = count;
-            }
+    public static void dfs(int i, int j, char[][] grid, int rows, int cols) {
+        if ( i < rows && i >= 0 && j < cols && j >= 0 && grid[i][j] == 1) {
+            grid[i][j] = '-';
+            dfs(i-1, j, grid, rows, cols);
+            dfs(i, j-1, grid, rows, cols);
+            dfs(i+1, j, grid, rows, cols);
+            dfs(i, j+1, grid, rows, cols);
         }
     }
 }
